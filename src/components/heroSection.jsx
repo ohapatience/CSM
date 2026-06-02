@@ -324,7 +324,7 @@ export default function HeroSection() {
               className="flex items-center gap-4 flex-wrap mb-14"
             >
               <motion.a
-                href="#contact"
+                href="/contact"
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 className="px-7 py-4 rounded-xl font-bold text-sm tracking-wide inline-flex items-center gap-2"

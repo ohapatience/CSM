@@ -94,7 +94,7 @@ export default function Footer() {
       <footer style={{ background: "#0A1E1B", fontFamily: "'Lato', sans-serif" }}>
 
         {/* ── CTA band ───────────────────────────────────────────── */}
-        <div
+        {/* <div
           className="relative overflow-hidden"
           style={{ background: "#1C3F39", borderTop: "1px solid rgba(42,96,87,0.5)" }}
         >
@@ -151,7 +151,7 @@ export default function Footer() {
               </motion.a>
             </motion.div>
           </div>
-        </div>
+        </div> */}
 
         {/* ── Main footer body ───────────────────────────────────── */}
         <div className="max-w-6xl mx-auto px-8 md:px-16 pt-16 pb-10">

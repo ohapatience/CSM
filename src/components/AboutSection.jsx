@@ -363,7 +363,7 @@ export default function AboutSection() {
               className="flex items-center gap-4 flex-wrap pt-2"
             >
               <motion.a
-                href="#contact"
+                href="/about"
                 whileHover={{
                   scale: 1.04,
                   boxShadow: "0 0 28px rgba(201,243,29,0.3)",
