@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   HiOutlineHome,
   HiOutlineDesktopComputer,
-  HiOutlinePencil,
-  HiOutlineChatAlt2,
   HiOutlineCollection,
 } from "react-icons/hi";
-import { FaLinkedinIn, FaXTwitter, FaDribbble } from "react-icons/fa6";
+import { Link, useLocation } from "react-router-dom";
+
+const MotionLink = motion(Link);
 
 const NAV_ITEMS = [
-  { label: "Home", href: "#home", icon: <HiOutlineHome size={15} /> },
+  { label: "Home", href: "/", icon: <HiOutlineHome size={15} /> },
   {
     label: "About",
     href: "/about",
@@ -31,10 +31,10 @@ const NAV_ITEMS = [
 ];
 
 export default function Navbar() {
-  const [active, setActive] = useState("Home");
   const [hovered, setHovered] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -73,8 +73,8 @@ export default function Navbar() {
             }}
           >
             {/* Logo pill */}
-            <motion.a
-              href="#home"
+            <MotionLink
+              to="/"
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               className="flex items-center gap-2 px-3 py-1.5 rounded-[14px] mr-2"
@@ -99,7 +99,7 @@ export default function Navbar() {
               >
                 Ezinne
               </span>
-            </motion.a>
+            </MotionLink>
 
             {/* Divider */}
             <div
@@ -109,14 +109,13 @@ export default function Navbar() {
 
             {/* Nav items */}
             {NAV_ITEMS.map((item) => {
-              const isActive = active === item.label;
+              const isActive = location.pathname === item.href;
               const isHovered = hovered === item.label;
 
               return (
-                <motion.a
+                <MotionLink
                   key={item.label}
-                  href={item.href}
-                  onClick={() => setActive(item.label)}
+                  to={item.href}
                   onHoverStart={() => setHovered(item.label)}
                   onHoverEnd={() => setHovered(null)}
                   className="relative flex items-center gap-2 px-4 py-2 rounded-[14px] text-sm font-semibold transition-colors select-none"
@@ -175,7 +174,7 @@ export default function Navbar() {
                       style={{ background: "#1C3F39", opacity: 0 }}
                     />
                   )}
-                </motion.a>
+                </MotionLink>
               );
             })}
 
@@ -186,8 +185,8 @@ export default function Navbar() {
             />
 
             {/* CTA button */}
-            <motion.a
-              href="/contact"
+            <MotionLink
+              to="/contact"
               whileHover={{
                 scale: 1.04,
                 boxShadow: "0 0 20px rgba(201,243,29,0.3)",
@@ -202,7 +201,7 @@ export default function Navbar() {
               }}
             >
               Let's Talk
-            </motion.a>
+            </MotionLink>
           </motion.div>
         </motion.nav>
       </div>
@@ -222,7 +221,11 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <MotionLink
+            to="/"
+            className="flex items-center gap-2"
+            onClick={() => setMobileOpen(false)}
+          >
             <div
               className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
               style={{
@@ -239,8 +242,7 @@ export default function Navbar() {
             >
               Ezinne
             </span>
-          </div>
-
+          </MotionLink>
           {/* Hamburger */}
           <motion.button
             onClick={() => setMobileOpen((o) => !o)}
@@ -289,11 +291,10 @@ export default function Navbar() {
               }}
             >
               {NAV_ITEMS.map((item, i) => (
-                <motion.a
+                <MotionLink
                   key={item.label}
-                  href={item.href}
+                  to={item.href}
                   onClick={() => {
-                    setActive(item.label);
                     setMobileOpen(false);
                   }}
                   initial={{ opacity: 0, x: -12 }}
@@ -302,37 +303,39 @@ export default function Navbar() {
                   className="flex items-center gap-3 px-5 py-4 text-sm font-semibold transition-colors"
                   style={{
                     fontFamily: "'Raleway', sans-serif",
-                    color: active === item.label ? "#C9F31D" : "#7FB3AE",
+                    color:
+                      location.pathname === item.href ? "#C9F31D" : "#7FB3AE",
                     borderBottom:
                       i < NAV_ITEMS.length - 1
                         ? "1px solid rgba(42,96,87,0.3)"
                         : "none",
                     background:
-                      active === item.label
+                      location.pathname === item.href
                         ? "rgba(201,243,29,0.06)"
                         : "transparent",
                   }}
                 >
                   <span
                     style={{
-                      color: active === item.label ? "#C9F31D" : "#4A7A73",
+                      color:
+                        location.pathname === item.href ? "#C9F31D" : "#4A7A73",
                     }}
                   >
                     {item.icon}
                   </span>
                   {item.label}
-                  {active === item.label && (
+                  {location.pathname === item.href && (
                     <motion.span
                       layoutId="mobile-dot"
                       className="ml-auto w-1.5 h-1.5 rounded-full"
                       style={{ background: "#C9F31D" }}
                     />
                   )}
-                </motion.a>
+                </MotionLink>
               ))}
               <div className="p-3">
-                <a
-                  href="#contact"
+                <MotionLink
+                  to="/contact"
                   className="block text-center py-3 rounded-xl text-xs font-bold tracking-widest uppercase"
                   style={{
                     background: "#C9F31D",
@@ -341,7 +344,7 @@ export default function Navbar() {
                   }}
                 >
                   Let's Talk
-                </a>
+                </MotionLink>
               </div>
             </motion.div>
           )}
