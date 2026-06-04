@@ -268,10 +268,10 @@ export default function HeroSection() {
             {/* Name */}
             <motion.h1
               {...enter(0.55)}
-              className="font-black leading-none mb-3"
+              className="font-black leading-none mb-3 text-4xl"
               style={{
                 fontFamily: "'Raleway', sans-serif",
-                fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
+                fontSize: "clamp(2.8rem, 6vw, 6rem)",
                 color: "#F4F8F4",
                 letterSpacing: "-0.02em",
               }}
