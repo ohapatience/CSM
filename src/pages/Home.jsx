@@ -1,9 +1,10 @@
 import React from "react";
 import Hero from "../components/heroSection";
 import AboutSection from "../components/AboutSection";
-import Services from "./Services";
 import ServicesSection from "../components/Services";
 import CTASection from "../components/CTASection";
+import RecommendationSection from "../components/RecommedationSection";
+import ToolsSection from "../components/ToolsSection";
 
 const Home = () => {
   return (
@@ -12,6 +13,10 @@ const Home = () => {
       <AboutSection />
       <ServicesSection />
       {/* <CTASection /> */}
+
+      <ToolsSection />
+
+      <RecommendationSection />
     </>
   );
 };

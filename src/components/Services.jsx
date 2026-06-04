@@ -19,7 +19,7 @@ const SERVICES = [
       "Structure, coordination, and execution for SaaS platforms, mobile apps, and digital initiatives — from first sprint to final delivery.",
     tags: ["Agile", "Scrum", "Risk Management"],
     href: "/services/technical-project-management",
-    size: "large",
+    size: "small",
   },
   {
     id: "02",
@@ -28,17 +28,17 @@ const SERVICES = [
     snippet:
       "Transform a product vision into development-ready documentation — user stories, roadmaps, and prioritized backlogs your team can act on immediately.",
     tags: ["Roadmaps", "User Stories", "Backlog"],
-    href: "/services/product-planning",
+    href: "/services",
     size: "small",
   },
   {
     id: "03",
     icon: HiOutlineGlobe,
-    title: "Website Revamp Coordination",
+    title: "Website Development & Revamp Coordination",
     snippet:
-      "Bridging founders, designers, and developers so your website redesign ships on time, on brief, and without the endless revision cycles.",
+      "Bridging founders, designers, and developers so your website project ships on time, on brief, and without the endless revision cycles.",
     tags: ["Redesign", "Stakeholders", "Launch"],
-    href: "/services/website-revamp",
+    href: "/services",
     size: "small",
   },
   {
@@ -48,7 +48,7 @@ const SERVICES = [
     snippet:
       "Keeping brand, pitch deck, and creative projects aligned — managing timelines, feedback cycles, and approvals so nothing falls through the cracks.",
     tags: ["Branding", "Pitch Decks", "Feedback"],
-    href: "/services/brand-creative",
+    href: "/services",
     size: "small",
   },
   {
@@ -58,8 +58,8 @@ const SERVICES = [
     snippet:
       "Operational and administrative support for founders and CEOs — calendars, meeting coordination, documentation, and the day-to-day that keeps a business running.",
     tags: ["Operations", "Scheduling", "Admin"],
-    href: "/services/executive-ops",
-    size: "large",
+    href: "/services",
+    size: "small",
   },
 ];
 
@@ -82,9 +82,7 @@ function ServiceCard({ service, delay }) {
       {...fadeUp(delay)}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className={`relative rounded-3xl overflow-hidden group ${
-        isLarge ? "lg:col-span-2" : "lg:col-span-1"
-      }`}
+      className="relative rounded-3xl overflow-hidden group"
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
       style={{
@@ -324,14 +322,28 @@ export default function ServicesSection() {
         </div>
 
         {/* ── Bento grid ──────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {SERVICES.map((service, i) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              delay={0.08 + i * 0.08}
-            />
-          ))}
+        <div className="space-y-4">
+          {/* Top Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {SERVICES.slice(0, 2).map((service, i) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                delay={0.08 + i * 0.08}
+              />
+            ))}
+          </div>
+
+          {/* Bottom Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {SERVICES.slice(2).map((service, i) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                delay={0.24 + i * 0.08}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

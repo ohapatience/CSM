@@ -33,7 +33,6 @@ import {
   SiGoogledrive,
   SiGithub,
   SiZoom,
-   
 } from "react-icons/si";
 import { TbBrandAsana, TbFileSpreadsheet, TbCalendar } from "react-icons/tb";
 import PageHeroSection from "../components/PageHeroSection";

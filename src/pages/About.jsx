@@ -147,11 +147,6 @@ function StatCard({ value, label, icon: Icon, delay }) {
   );
 }
 
-const STATS = [
-  { value: "8+", label: "Years of experience", icon: HiOutlineBriefcase },
-  { value: "60+", label: "Projects delivered", icon: HiOutlineLightningBolt },
-];
-
 // ── Main component ────────────────────────────────────────────────────────────
 function AboutSection() {
   const sectionRef = useRef(null);
@@ -423,19 +418,6 @@ function AboutSection() {
               </p>
             </motion.div>
 
-            {/* Stats grid */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.25 }}
-              className="grid grid-cols-2 gap-3"
-            >
-              {STATS.map((s, i) => (
-                <StatCard key={s.label} {...s} delay={0.28 + i * 0.07} />
-              ))}
-            </motion.div>
-
             {/* CTA */}
             <motion.div
               {...fadeRight(0.55)}
@@ -482,9 +464,9 @@ const JOURNEY_PARAGRAPHS = [
 ];
 
 const JOURNEY_MARKERS = [
-  { value: "8+", label: "Years of experience" },
-  { value: "60+", label: "Projects delivered" },
-  { value: "PMP · CSM", label: "Certifications" },
+  { value: "1+", label: "Years of experience" },
+  { value: "4+", label: "Projects delivered" },
+  { value: "Google Project Management · Fundamentals of Software Engineering", label: "Certifications" },
 ];
 
 function JourneySection() {

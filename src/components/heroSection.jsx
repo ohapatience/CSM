@@ -349,32 +349,6 @@ export default function HeroSection() {
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </motion.a>
-
-              <motion.a
-                href="#cv"
-                whileHover={{ scale: 1.04, y: -2, color: "#C9F31D" }}
-                whileTap={{ scale: 0.97 }}
-                className="px-7 py-4 rounded-xl font-bold text-sm tracking-wide inline-flex items-center gap-2 transition-colors"
-                style={{
-                  border: "1.5px solid #2A6057",
-                  color: "#F4F8F4",
-                  fontFamily: "'Raleway', sans-serif",
-                }}
-              >
-                Download CV
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
-                </svg>
-              </motion.a>
             </motion.div>
 
             {/* Stats */}
@@ -384,11 +358,10 @@ export default function HeroSection() {
               transition={{ delay: 1.0 }}
               className="flex items-center gap-10"
             >
-              <StatItem value="8+" label="Years exp." delay={1.05} />
+              <StatItem value="1+" label="Years exp." delay={1.05} />
               <div className="w-px h-10" style={{ background: "#2A6057" }} />
-              <StatItem value="60+" label="Projects led" delay={1.1} />
+              <StatItem value="4+" label="Projects led" delay={1.1} />
               <div className="w-px h-10" style={{ background: "#2A6057" }} />
-              <StatItem value="12" label="Industries" delay={1.15} />
             </motion.div>
           </div>
 

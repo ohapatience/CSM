@@ -68,11 +68,6 @@ function StatCard({ value, label, icon: Icon, delay }) {
   );
 }
 
-const STATS = [
-  { value: "8+", label: "Years of experience", icon: HiOutlineBriefcase },
-  { value: "60+", label: "Projects delivered", icon: HiOutlineLightningBolt },
-];
-
 // ── Main component ────────────────────────────────────────────────────────────
 export default function AboutSection() {
   const sectionRef = useRef(null);
@@ -344,19 +339,6 @@ export default function AboutSection() {
               </p>
             </motion.div>
 
-            {/* Stats grid */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.25 }}
-              className="grid grid-cols-2 gap-3"
-            >
-              {STATS.map((s, i) => (
-                <StatCard key={s.label} {...s} delay={0.28 + i * 0.07} />
-              ))}
-            </motion.div>
-
             {/* CTA */}
             <motion.div
               {...fadeRight(0.55)}
@@ -373,16 +355,6 @@ export default function AboutSection() {
               >
                 Learn More
                 <HiArrowRight size={16} />
-              </motion.a>
-
-              <motion.a
-                href="#cv"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="btn btn-outline inline-flex items-center gap-2"
-              >
-                Download CV
-                <HiArrowDown size={16} />
               </motion.a>
             </motion.div>
           </div>
