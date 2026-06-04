@@ -12,11 +12,7 @@ import {
   HiOutlineChat,
   HiOutlineClock,
 } from "react-icons/hi";
-import {
-  HiArrowRight,
-  HiArrowDown,
-  HiOutlineCheckCircle,
-} from "react-icons/hi2";
+import { HiArrowRight, HiArrowDown } from "react-icons/hi2";
 import PageHeroSection from "../components/PageHeroSection";
 import heroImage from "../assets/ezinne.png";
 
@@ -454,18 +450,8 @@ function AboutSection() {
                 whileTap={{ scale: 0.97 }}
                 className="btn btn-primary inline-flex items-center gap-2"
               >
-                Learn More
+                Explore My Services
                 <HiArrowRight size={16} />
-              </motion.a>
-
-              <motion.a
-                href="#cv"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="btn btn-outline inline-flex items-center gap-2"
-              >
-                Download CV
-                <HiArrowDown size={16} />
               </motion.a>
             </motion.div>
           </div>
@@ -1249,116 +1235,6 @@ function SkillsSection() {
   );
 }
 
-// ── SECTION 5: CTA Strip ───────────────────────────────────────────────────────
-function CTASection() {
-  return (
-    <section
-      className="relative overflow-hidden py-24"
-      style={{ background: "#0D2622" }}
-    >
-      {/* Large decorative number */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-        style={{ opacity: 0.03 }}
-      >
-        <span
-          className="font-black"
-          style={{
-            fontFamily: "var(--font-heading)",
-            fontSize: "clamp(12rem, 30vw, 22rem)",
-            color: "#C9F31D",
-            lineHeight: 1,
-          }}
-        >
-          PM
-        </span>
-      </div>
-
-      <BgTexture radialPos="50% 50%" />
-
-      <div className="wrapper relative z-10 text-center flex flex-col items-center gap-8">
-        <motion.div {...fadeUp(0)} className="flex items-center gap-4">
-          <div className="w-8 h-px" style={{ background: "#C9F31D" }} />
-          <span
-            className="text-xs font-bold tracking-[0.25em] uppercase"
-            style={{ color: "#C9F31D", fontFamily: "var(--font-heading)" }}
-          >
-            Let's Work Together
-          </span>
-          <div className="w-8 h-px" style={{ background: "#C9F31D" }} />
-        </motion.div>
-
-        <motion.h2
-          {...fadeUp(0.1)}
-          className="font-black leading-tight max-w-2xl"
-          style={{
-            fontFamily: "var(--font-heading)",
-            fontSize: "clamp(2rem, 5vw, 3.5rem)",
-            color: "var(--white)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Ready to turn your <span style={{ color: "#C9F31D" }}>vision</span>{" "}
-          into a shipped product?
-        </motion.h2>
-
-        <motion.p
-          {...fadeUp(0.18)}
-          className="text-base max-w-lg leading-relaxed"
-          style={{ color: "#7FB3AE" }}
-        >
-          Whether you're a founder with an idea or a team needing structure —
-          I'm here to bring clarity, coordination, and results.
-        </motion.p>
-
-        <motion.div
-          {...fadeUp(0.26)}
-          className="flex items-center gap-4 flex-wrap justify-center"
-        >
-          <motion.a
-            href="/contact"
-            whileHover={{
-              scale: 1.04,
-              boxShadow: "0 0 28px rgba(201,243,29,0.3)",
-            }}
-            whileTap={{ scale: 0.97 }}
-            className="btn btn-primary inline-flex items-center gap-2"
-          >
-            Get in Touch
-            <HiArrowRight size={16} />
-          </motion.a>
-
-          <motion.a
-            href="#cv"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="btn btn-outline inline-flex items-center gap-2"
-          >
-            Download CV
-            <HiArrowDown size={16} />
-          </motion.a>
-        </motion.div>
-
-        {/* Certs row */}
-        <motion.div {...fadeUp(0.34)} className="flex items-center gap-6 pt-4">
-          {["PMP Certified", "CSM Certified", "PRINCE2"].map((cert) => (
-            <div key={cert} className="flex items-center gap-2">
-              <HiOutlineCheckCircle size={14} style={{ color: "#C9F31D" }} />
-              <span
-                className="text-xs font-bold"
-                style={{ color: "#4A7A73", fontFamily: "var(--font-heading)" }}
-              >
-                {cert}
-              </span>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// ── PAGE ───────────────────────────────────────────────────────────────────────
 const About = () => {
   return (
     <>
@@ -1378,7 +1254,6 @@ const About = () => {
       <ProblemsSection />
       <ApproachSection />
       <SkillsSection />
-      <CTASection />
     </>
   );
 };
