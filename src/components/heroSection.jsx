@@ -1,11 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  AnimatePresence,
-} from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { FaLinkedinIn, FaEnvelope } from "react-icons/fa6";
+import { SiUpwork } from "react-icons/si";
 import heroImage from "../assets/ezinne.png";
+import { LINKEDIN_URL, UPWORK_URL, EMAIL } from "../links";
+
+// Titles that scroll in and out, one after another
+const ROLES = [
+  "Customer Success Manager",
+  "Onboarding Specialist",
+  "Retention & Account Recovery",
+];
 
 // ── Auto-typing hook ──────────────────────────────────────────────────────────
 function useTypewriter(
@@ -48,6 +53,31 @@ function useTypewriter(
   return display;
 }
 
+// ── Count-up from 1 to 100 (runs once) ────────────────────────────────────────
+function CountUp({ target = 100, duration = 2000, delay = 1000 }) {
+  const [value, setValue] = useState(1);
+
+  useEffect(() => {
+    let interval;
+    const start = setTimeout(() => {
+      const stepTime = duration / target;
+      let current = 1;
+      interval = setInterval(() => {
+        current += 1;
+        setValue(current);
+        if (current >= target) clearInterval(interval);
+      }, stepTime);
+    }, delay);
+
+    return () => {
+      clearTimeout(start);
+      clearInterval(interval);
+    };
+  }, [target, duration, delay]);
+
+  return <>{value}%</>;
+}
+
 // ── Magnetic cursor blob ──────────────────────────────────────────────────────
 function CursorBlob() {
   const x = useMotionValue(0);
@@ -68,9 +98,6 @@ function CursorBlob() {
     <motion.div
       style={{ left: sx, top: sy }}
       className="pointer-events-none fixed z-0 w-80 h-80 rounded-full opacity-[0.07]"
-      css={{
-        background: "radial-gradient(circle, #C9F31D 0%, transparent 70%)",
-      }}
     >
       <div
         style={{
@@ -96,7 +123,7 @@ function FloatingShape({ className, delay = 0, duration = 6, style }) {
   );
 }
 
-// ── Stats counter ─────────────────────────────────────────────────────────────
+// ── Stats ─────────────────────────────────────────────────────────────────────
 function StatItem({ value, label, delay }) {
   return (
     <motion.div
@@ -122,10 +149,13 @@ function StatItem({ value, label, delay }) {
 }
 
 // ── Social link ───────────────────────────────────────────────────────────────
-function SocialLink({ icon, delay }) {
+function SocialLink({ href, icon, label, delay }) {
   return (
     <motion.a
-      href="#"
+      href={href}
+      target={href.startsWith("mailto:") ? undefined : "_blank"}
+      rel="noopener noreferrer"
+      aria-label={label}
       initial={{ opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay, duration: 0.5, ease: "easeOut" }}
@@ -140,14 +170,12 @@ function SocialLink({ icon, delay }) {
 
 // ── Main Hero ─────────────────────────────────────────────────────────────────
 export default function HeroSection() {
-  const roles = ["Technical Project Manager"];
-  const typed = useTypewriter(roles, {
+  const typed = useTypewriter(ROLES, {
     typingSpeed: 70,
     deletingSpeed: 40,
     pause: 2000,
   });
 
-  // Stagger config
   const enter = (delay) => ({
     initial: { opacity: 0, y: 32 },
     animate: { opacity: 1, y: 0 },
@@ -165,10 +193,8 @@ export default function HeroSection() {
         className="relative h-[120vh] flex overflow-hidden"
         style={{ background: "#0D2622", fontFamily: "'Lato', sans-serif" }}
       >
-        {/* Cursor glow */}
         <CursorBlob />
 
-        {/* Subtle grid overlay */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{
@@ -180,7 +206,7 @@ export default function HeroSection() {
 
         {/* ── LEFT PANEL ─────────────────────────────────────────── */}
         <div className="relative z-10 flex flex-col justify-between w-full lg:w-[55%] px-8 md:px-16 py-12">
-          {/* Social sidebar */}
+          {/* Social sidebar: LinkedIn, Upwork, Email */}
           <motion.div
             className="absolute left-6 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-5"
             initial={{ opacity: 0 }}
@@ -192,43 +218,22 @@ export default function HeroSection() {
               style={{ background: "linear-gradient(transparent, #2A6057)" }}
             />
             <SocialLink
+              href={LINKEDIN_URL}
+              label="LinkedIn"
               delay={1.3}
-              icon={
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
-              }
+              icon={<FaLinkedinIn size={16} />}
             />
             <SocialLink
+              href={UPWORK_URL}
+              label="Upwork"
               delay={1.4}
-              icon={
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                </svg>
-              }
+              icon={<SiUpwork size={16} />}
             />
             <SocialLink
+              href={`mailto:${EMAIL}`}
+              label="Email"
               delay={1.5}
-              icon={
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                </svg>
-              }
+              icon={<FaEnvelope size={16} />}
             />
             <div
               className="w-px h-16"
@@ -252,7 +257,7 @@ export default function HeroSection() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ background: "#C9F31D" }}
                 />
-                Available for new projects
+                Available for remote roles · UTC+1
               </div>
             </motion.div>
 
@@ -268,7 +273,7 @@ export default function HeroSection() {
             {/* Name */}
             <motion.h1
               {...enter(0.55)}
-              className="font-black leading-none mb-3 text-4xl"
+              className="font-black leading-none mb-3"
               style={{
                 fontFamily: "'Raleway', sans-serif",
                 fontSize: "clamp(2.8rem, 6vw, 6rem)",
@@ -276,14 +281,11 @@ export default function HeroSection() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Patience<span className="text-[#C9F31D]">.</span>
+              Patience<span style={{ color: "#C9F31D" }}>.</span>
             </motion.h1>
 
             {/* Auto-typing role */}
-            <motion.div
-              {...enter(0.65)}
-              className="flex items-center gap-3 mb-8"
-            >
+            <motion.div {...enter(0.65)} className="flex items-center gap-3 mb-8">
               <div className="w-8 h-px" style={{ background: "#C9F31D" }} />
               <div
                 className="text-xl font-semibold h-8 flex items-center"
@@ -307,18 +309,18 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Description */}
+            {/* Tagline */}
             <motion.p
               {...enter(0.75)}
               className="text-base leading-relaxed mb-10 max-w-md"
               style={{ color: "#4A7A73" }}
             >
-              Transforming complex visions into delivered outcomes. I bridge
-              strategy and execution — leading cross-functional teams with
-              clarity, purpose, and relentless focus on results.
+              Helping B2B businesses create better customer experiences, deliver
+              lasting value, and build relationships that drive retention and
+              growth.
             </motion.p>
 
-            {/* CTAs */}
+            {/* Buttons side by side */}
             <motion.div
               {...enter(0.85)}
               className="flex items-center gap-4 flex-wrap mb-14"
@@ -335,7 +337,7 @@ export default function HeroSection() {
                   boxShadow: "0 0 32px rgba(201,243,29,0.25)",
                 }}
               >
-                Hire Me
+                Send Me a Message
                 <svg
                   width="16"
                   height="16"
@@ -349,6 +351,20 @@ export default function HeroSection() {
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </motion.a>
+
+              <motion.a
+                href="/contact"
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-7 py-4 rounded-xl font-bold text-sm tracking-wide inline-flex items-center gap-2"
+                style={{
+                  border: "1px solid #C9F31D",
+                  color: "#C9F31D",
+                  fontFamily: "'Raleway', sans-serif",
+                }}
+              >
+                Hire Me
+              </motion.a>
             </motion.div>
 
             {/* Stats */}
@@ -356,12 +372,17 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0 }}
-              className="flex items-center gap-10"
+              className="flex items-center gap-10 flex-wrap"
             >
-              <StatItem value="1+" label="Years exp." delay={1.05} />
+              <StatItem value="2+" label="Years exp." delay={1.05} />
               <div className="w-px h-10" style={{ background: "#2A6057" }} />
-              <StatItem value="4+" label="Projects led" delay={1.1} />
+              <StatItem value="3+" label="Case studies" delay={1.1} />
               <div className="w-px h-10" style={{ background: "#2A6057" }} />
+              <StatItem
+                value={<CountUp target={100} duration={2000} delay={1200} />}
+                label="Retention focus"
+                delay={1.15}
+              />
             </motion.div>
           </div>
 
@@ -375,11 +396,7 @@ export default function HeroSection() {
           >
             <motion.div
               animate={{ y: [0, 6, 0] }}
-              transition={{
-                duration: 1.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
             >
               <svg
                 width="16"
@@ -406,7 +423,6 @@ export default function HeroSection() {
           className="hidden lg:flex relative w-[45%] items-end overflow-hidden"
           style={{ background: "#122B27" }}
         >
-          {/* Decorative vertical stripe */}
           <div
             className="absolute left-0 top-0 bottom-0 w-px"
             style={{
@@ -415,7 +431,6 @@ export default function HeroSection() {
             }}
           />
 
-          {/* Geometric decorative shapes */}
           <FloatingShape
             className="absolute top-12 right-12 w-14 h-14 rounded-2xl"
             style={{ background: "#C9F31D", opacity: 0.9, rotate: "12deg" }}
@@ -435,12 +450,9 @@ export default function HeroSection() {
             duration={6}
           />
 
-          {/* Dashed decorative ring */}
           <motion.div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full"
-            style={{
-              border: "1px dashed rgba(201,243,29,0.15)",
-            }}
+            style={{ border: "1px dashed rgba(201,243,29,0.15)" }}
             animate={{ rotate: 360 }}
             transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           />
@@ -453,11 +465,11 @@ export default function HeroSection() {
 
           <img
             src={heroImage}
-            alt="Hero"
+            alt="Patience Oha"
             className="w-[90%] max-h-[90%] object-cover"
           />
 
-          {/* "scroll" vertical text */}
+          {/* Vertical text */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -471,7 +483,7 @@ export default function HeroSection() {
               textTransform: "uppercase",
             }}
           >
-            Patience Ezinne · PM
+            Patience Oha · CSM
           </motion.div>
         </motion.div>
       </section>

@@ -1,115 +1,28 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-
-const SOCIALS = [
-  { label: "LinkedIn", href: "#", icon: <FaLinkedinIn size={16} /> },
-  { label: "Twitter / X", href: "#", icon: <FaXTwitter size={16} /> },
-];
-
-const LINKS = {
-  Navigate: [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Projects", href: "/projects" },
-    { label: "Contact", href: "/contact" },
-  ],
-  Services: [
-    { label: "Technical Project Management", href: "/services#tpm" },
-    { label: "Product Planning & Delivery", href: "/services#product" },
-    { label: "Website Revamp Coordination", href: "/services#website" },
-    { label: "Brand & Creative Coordination", href: "/services#brand" },
-    { label: "Executive Operations Support", href: "/services#ops" },
-  ],
-};
-
-function FooterLink({ label, href }) {
-  return (
-    <motion.a
-      href={href}
-      whileHover={{ x: 5, color: "#C9F31D" }}
-      transition={{ duration: 0.2 }}
-      className="flex items-center gap-2 text-sm py-1 transition-colors"
-      style={{ color: "#4A7A73", fontFamily: "var(--font-body)" }}
-    >
-      <motion.span
-        className="w-3 h-px flex-shrink-0"
-        style={{ background: "#2A6057" }}
-        whileHover={{ width: "16px", background: "#C9F31D" }}
-      />
-      {label}
-    </motion.a>
-  );
-}
-
-function SocialButton({ label, href, icon }) {
-  return (
-    <motion.a
-      href={href}
-      aria-label={label}
-      whileHover={{
-        y: -4,
-        color: "#C9F31D",
-        borderColor: "rgba(201,243,29,0.4)",
-      }}
-      whileTap={{ scale: 0.92 }}
-      transition={{ duration: 0.2 }}
-      className="w-9 h-9 rounded-xl flex items-center justify-center"
-      style={{
-        background: "rgba(42,96,87,0.15)",
-        border: "1px solid rgba(42,96,87,0.4)",
-        color: "#4A7A73",
-      }}
-    >
-      {icon}
-    </motion.a>
-  );
-}
+import { FaLinkedinIn, FaEnvelope } from "react-icons/fa6";
+import { SiUpwork } from "react-icons/si";
+import { HiArrowRight } from "react-icons/hi2";
+import { LINKEDIN_URL, UPWORK_URL, EMAIL } from "../links";
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setEmail("");
-    }
-  };
-
-  const year = new Date().getFullYear();
-
-  const fadeUp = (delay) => ({
-    initial: { opacity: 0, y: 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { delay, duration: 0.65, ease: [0.22, 1, 0.36, 1] },
-  });
-
   return (
-    <footer style={{ background: "#0A1E1B", fontFamily: "var(--font-body)" }}>
-      {/* ── Top divider ────────────────────────────────────────── */}
-      <div
-        className="h-px w-full"
-        style={{
-          background:
-            "linear-gradient(to right, transparent, rgba(42,96,87,0.5), transparent)",
-        }}
-      />
-
-      {/* ── Main footer body ───────────────────────────────────── */}
-      <div className="wrapper pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand column */}
-          <motion.div {...fadeUp(0)} className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-5">
+    <footer
+      className="relative py-16"
+      style={{
+        background: "#0A1F1C",
+        borderTop: "1px solid rgba(42,96,87,0.4)",
+      }}
+    >
+      <div className="wrapper">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+          {/* Identity */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm"
+                className="w-11 h-11 rounded-xl flex items-center justify-center font-black"
                 style={{
                   background: "#C9F31D",
-                  color: "#1C3F39",
+                  color: "#0D2622",
                   fontFamily: "var(--font-heading)",
                 }}
               >
@@ -117,179 +30,111 @@ export default function Footer() {
               </div>
               <div>
                 <p
-                  className="font-black text-sm leading-none"
-                  style={{
-                    fontFamily: "var(--font-heading)",
-                    color: "#F4F8F4",
-                  }}
+                  className="font-black leading-tight"
+                  style={{ fontFamily: "var(--font-heading)", color: "var(--white)" }}
                 >
                   Patience Oha
                 </p>
-                <p className="text-xs mt-0.5" style={{ color: "#4A7A73" }}>
-                  Technical Project Manager
+                <p className="text-xs" style={{ color: "#7FB3AE" }}>
+                  Customer Success Manager
                 </p>
               </div>
             </div>
-
-            <p
-              className="text-sm leading-relaxed mb-6"
-              style={{ color: "#4A7A73" }}
-            >
-              Turning complex visions into delivered outcomes — with precision,
-              clarity, and a human touch.
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#4A7A73" }}>
+              Helping businesses build stronger customer relationships and deliver
+              lasting customer value.
             </p>
+          </div>
 
-            <div className="flex gap-2">
-              {SOCIALS.map((s) => (
-                <SocialButton key={s.label} {...s} />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Navigate + Services columns */}
-          {Object.entries(LINKS).map(([group, items], gi) => (
-            <motion.div key={group} {...fadeUp(0.1 + gi * 0.05)}>
-              <h4
-                className="text-xs font-bold tracking-widest uppercase mb-5"
-                style={{ color: "#C9F31D", fontFamily: "var(--font-heading)" }}
+          {/* Upwork invitation */}
+          <motion.a
+            href={UPWORK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ y: -3 }}
+            className="group flex items-center justify-between gap-4 p-6 rounded-2xl"
+            style={{
+              background: "rgba(28,63,57,0.3)",
+              border: "1px solid rgba(20,168,0,0.35)",
+            }}
+          >
+            <div className="flex items-center gap-4">
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(20,168,0,0.12)" }}
               >
-                {group}
-              </h4>
-              <div className="flex flex-col gap-1">
-                {items.map((item) => (
-                  <FooterLink key={item.label} {...item} />
-                ))}
+                <SiUpwork size={24} color="#14A800" />
               </div>
-            </motion.div>
-          ))}
+              <div>
+                <p
+                  className="text-xs font-bold tracking-[0.2em] uppercase mb-1"
+                  style={{ color: "#7FB3AE" }}
+                >
+                  Hire me on Upwork
+                </p>
+                <p
+                  className="font-black"
+                  style={{ fontFamily: "var(--font-heading)", color: "var(--white)" }}
+                >
+                  Invite me to your job
+                </p>
+              </div>
+            </div>
+            <HiArrowRight
+              size={18}
+              className="flex-shrink-0 transition-transform group-hover:translate-x-1"
+              style={{ color: "#C9F31D" }}
+            />
+          </motion.a>
 
-          {/* Newsletter column */}
-          <motion.div {...fadeUp(0.2)}>
-            <h4
-              className="text-xs font-bold tracking-widest uppercase mb-5"
+          {/* Let's connect */}
+          <div className="flex flex-col gap-4 lg:items-end">
+            <p
+              className="text-xs font-bold tracking-[0.2em] uppercase"
               style={{ color: "#C9F31D", fontFamily: "var(--font-heading)" }}
             >
-              Stay Updated
-            </h4>
-            <p className="text-sm mb-4" style={{ color: "#4A7A73" }}>
-              PM insights, case studies, and leadership frameworks — delivered
-              monthly.
+              Let's Connect
             </p>
-
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold"
+            <div className="flex gap-3">
+              <motion.a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                whileHover={{ y: -2, color: "#C9F31D" }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{
-                  background: "rgba(201,243,29,0.1)",
-                  border: "1px solid rgba(201,243,29,0.25)",
-                  color: "#C9F31D",
+                  background: "rgba(42,96,87,0.3)",
+                  color: "#7FB3AE",
+                  border: "1px solid rgba(42,96,87,0.5)",
                 }}
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
-                You're on the list!
-              </motion.div>
-            ) : (
-              <div className="flex flex-col gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                  style={{
-                    background: "rgba(42,96,87,0.15)",
-                    border: "1px solid rgba(42,96,87,0.4)",
-                    color: "#F4F8F4",
-                    fontFamily: "var(--font-body)",
-                  }}
-                  onFocus={(e) =>
-                    (e.target.style.borderColor = "rgba(201,243,29,0.4)")
-                  }
-                  onBlur={(e) =>
-                    (e.target.style.borderColor = "rgba(42,96,87,0.4)")
-                  }
-                />
-                <motion.button
-                  onClick={() => {
-                    if (email) {
-                      setSubmitted(true);
-                      setEmail("");
-                    }
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full py-3 rounded-xl text-xs font-bold tracking-widest uppercase"
-                  style={{
-                    background: "#1C3F39",
-                    color: "#C9F31D",
-                    border: "1px solid rgba(201,243,29,0.25)",
-                    fontFamily: "var(--font-heading)",
-                    cursor: "pointer",
-                  }}
-                >
-                  Subscribe
-                </motion.button>
-              </div>
-            )}
-
-            <div
-              className="mt-5 flex items-center gap-2 text-xs"
-              style={{ color: "#4A7A73" }}
-            >
-              <span
-                className="w-2 h-2 rounded-full animate-pulse flex-shrink-0"
-                style={{ background: "#C9F31D" }}
-              />
-              Available for new projects
+                <FaLinkedinIn size={16} />
+              </motion.a>
+              <motion.a
+                href={`mailto:${EMAIL}`}
+                aria-label="Email"
+                whileHover={{ y: -2, color: "#C9F31D" }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{
+                  background: "rgba(42,96,87,0.3)",
+                  color: "#7FB3AE",
+                  border: "1px solid rgba(42,96,87,0.5)",
+                }}
+              >
+                <FaEnvelope size={16} />
+              </motion.a>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* ── Bottom bar ──────────────────────────────────────── */}
-        <motion.div
-          {...fadeUp(0.3)}
-          className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8"
-          style={{ borderTop: "1px solid rgba(42,96,87,0.3)" }}
+        {/* Copyright */}
+        <div
+          className="mt-14 pt-6 text-xs"
+          style={{ borderTop: "1px solid rgba(42,96,87,0.3)", color: "#4A7A73" }}
         >
-          <p
-            className="text-xs text-center md:text-left"
-            style={{ color: "#2A6057" }}
-          >
-            © {year} Patience Oha. Crafted with intention.
-          </p>
-
-          <div className="hidden md:flex items-center gap-3">
-            <div
-              className="w-16 h-px"
-              style={{
-                background: "linear-gradient(to right, transparent, #2A6057)",
-              }}
-            />
-            <div
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ background: "#C9F31D" }}
-            />
-            <div
-              className="w-16 h-px"
-              style={{
-                background: "linear-gradient(to left, transparent, #2A6057)",
-              }}
-            />
-          </div>
-        </motion.div>
+          © 2026 Patience Oha. All rights reserved.
+        </div>
       </div>
     </footer>
   );

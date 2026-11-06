@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Project from "./pages/Project";
-import Services from "./pages/Services";
+import Experience from "./pages/Experience";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
@@ -18,7 +18,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Project />} />
-        <Route path="/services" element={<Services />} />
+        <Route path="/experience" element={<Experience />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

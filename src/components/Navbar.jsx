@@ -4,6 +4,7 @@ import {
   HiOutlineHome,
   HiOutlineDesktopComputer,
   HiOutlineCollection,
+  HiOutlineBriefcase,
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 
@@ -17,17 +18,15 @@ const NAV_ITEMS = [
     icon: <HiOutlineDesktopComputer size={15} />,
   },
   {
-    label: "Services",
-    href: "/services",
-    icon: <HiOutlineDesktopComputer size={15} />,
+    label: "Experience",
+    href: "/experience",
+    icon: <HiOutlineBriefcase size={15} />,
   },
   {
-    label: "Projects",
+    label: "Case Studies",
     href: "/projects",
     icon: <HiOutlineCollection size={15} />,
   },
-
-  // { label: "Contact", href: "/contact", icon: <HiOutlineChatAlt2 size={15} /> },
 ];
 
 export default function Navbar() {
@@ -97,7 +96,7 @@ export default function Navbar() {
                   fontFamily: "'Raleway', sans-serif",
                 }}
               >
-                Ezinne
+                Patience
               </span>
             </MotionLink>
 
@@ -240,9 +239,10 @@ export default function Navbar() {
               className="text-xs font-bold tracking-widest uppercase"
               style={{ color: "#C9F31D", fontFamily: "'Raleway', sans-serif" }}
             >
-              Ezinne
+              Patience
             </span>
           </MotionLink>
+
           {/* Hamburger */}
           <motion.button
             onClick={() => setMobileOpen((o) => !o)}
@@ -294,9 +294,7 @@ export default function Navbar() {
                 <MotionLink
                   key={item.label}
                   to={item.href}
-                  onClick={() => {
-                    setMobileOpen(false);
-                  }}
+                  onClick={() => setMobileOpen(false)}
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06 }}

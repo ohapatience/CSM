@@ -1,13 +1,9 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import {
-  HiOutlineBriefcase,
-  HiOutlineLightningBolt,
-  HiOutlineGlobe,
-  HiOutlineBadgeCheck,
-} from "react-icons/hi";
-import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import { HiArrowRight, HiArrowDown } from "react-icons/hi2";
+import { HiOutlineBadgeCheck } from "react-icons/hi";
+import { HiArrowRight } from "react-icons/hi2";
+import { FaLinkedinIn, FaEnvelope } from "react-icons/fa6";
+import { SiUpwork } from "react-icons/si";
 import heroImage from "../assets/ezinne.png";
 
 // ── Animation helpers ─────────────────────────────────────────────────────────
@@ -32,41 +28,25 @@ const fadeRight = (delay = 0) => ({
   transition: { delay, duration: 0.8, ease: [0.22, 1, 0.36, 1] },
 });
 
-// ── Stat card ─────────────────────────────────────────────────────────────────
-function StatCard({ value, label, icon: Icon, delay }) {
-  return (
-    <motion.div
-      {...fadeUp(delay)}
-      whileHover={{
-        y: -6,
-        boxShadow:
-          "0 16px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,243,29,0.15)",
-      }}
-      className="flex flex-col gap-2 p-4 rounded-2xl transition-all"
-      style={{
-        background: "rgba(28,63,57,0.4)",
-        border: "1px solid rgba(42,96,87,0.4)",
-        backdropFilter: "blur(8px)",
-      }}
-    >
-      <div
-        className="w-8 h-8 rounded-xl flex items-center justify-center"
-        style={{ background: "rgba(201,243,29,0.12)", color: "#C9F31D" }}
-      >
-        <Icon size={16} />
-      </div>
-      <p
-        className="text-2xl font-black leading-none"
-        style={{ fontFamily: "var(--font-heading)", color: "#C9F31D" }}
-      >
-        {value}
-      </p>
-      <p className="text-xs leading-tight" style={{ color: "#4A7A73" }}>
-        {label}
-      </p>
-    </motion.div>
-  );
-}
+// ── Social links shown under the photo ────────────────────────────────────────
+// TODO: replace the placeholder links with your real profiles
+const SOCIAL_LINKS = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/YOUR-PROFILE",
+    icon: FaLinkedinIn,
+  },
+  {
+    label: "Upwork",
+    href: "https://www.upwork.com/freelancers/YOUR-UPWORK-PROFILE",
+    icon: SiUpwork,
+  },
+  {
+    label: "Email",
+    href: "mailto:your@email.com",
+    icon: FaEnvelope,
+  },
+];
 
 // ── Main component ────────────────────────────────────────────────────────────
 export default function AboutSection() {
@@ -115,7 +95,7 @@ export default function AboutSection() {
 
         {/* ── Two-column layout ──────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-center">
-          {/* ── LEFT — Creative Photo Card ─────────────────────────── */}
+          {/* ── LEFT — Photo card ──────────────────────────────────── */}
           <motion.div
             {...fadeLeft(0.1)}
             className="relative flex justify-center lg:justify-start"
@@ -132,11 +112,7 @@ export default function AboutSection() {
                   zIndex: 0,
                 }}
                 animate={{ opacity: [0.3, 0.7, 0.3] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
 
               {/* Second decorative offset */}
@@ -155,8 +131,7 @@ export default function AboutSection() {
               <div
                 className="relative z-10 rounded-3xl overflow-hidden"
                 style={{
-                  background:
-                    "linear-gradient(145deg, #1C3F39 0%, #122B27 100%)",
+                  background: "linear-gradient(145deg, #1C3F39 0%, #122B27 100%)",
                   border: "1px solid rgba(42,96,87,0.6)",
                   boxShadow:
                     "0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
@@ -166,7 +141,7 @@ export default function AboutSection() {
                 <div className="relative w-full aspect-[4/5] overflow-hidden">
                   <img
                     src={heroImage}
-                    alt="Hero"
+                    alt="Patience Oha"
                     className="w-full object-cover"
                   />
                   <div
@@ -179,7 +154,7 @@ export default function AboutSection() {
 
                   <img
                     src={heroImage}
-                    alt="Hero"
+                    alt="Patience Oha"
                     className="w-[90%] max-h-[90%] object-cover"
                   />
 
@@ -187,8 +162,7 @@ export default function AboutSection() {
                   <div
                     className="absolute bottom-0 left-0 right-0 h-40"
                     style={{
-                      background:
-                        "linear-gradient(transparent, rgba(18,43,39,0.95))",
+                      background: "linear-gradient(transparent, rgba(18,43,39,0.95))",
                     }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 px-6 pb-5 z-10">
@@ -202,33 +176,33 @@ export default function AboutSection() {
                       Patience Oha
                     </p>
                     <p className="text-xs mt-1" style={{ color: "#7FB3AE" }}>
-                      Technical Project Manager
+                      Customer Success Manager
                     </p>
                   </div>
                 </div>
 
-                {/* Card footer */}
+                {/* Card footer: CSM + social icons */}
                 <div
                   className="px-6 py-4 flex items-center justify-between"
                   style={{ borderTop: "1px solid rgba(42,96,87,0.3)" }}
                 >
-                  {["PMP", "CSM", "PRINCE2"].map((cert) => (
-                    <span
-                      key={cert}
-                      className="text-xs font-black tracking-widest"
-                      style={{
-                        color: "var(--secondary)",
-                        fontFamily: "var(--font-heading)",
-                      }}
-                    >
-                      {cert}
-                    </span>
-                  ))}
+                  <span
+                    className="text-xs font-black tracking-widest"
+                    style={{
+                      color: "var(--secondary)",
+                      fontFamily: "var(--font-heading)",
+                    }}
+                  >
+                    CSM
+                  </span>
                   <div className="flex gap-2">
-                    {[FaLinkedinIn, FaXTwitter].map((Icon, i) => (
+                    {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
                       <motion.a
-                        key={i}
-                        href="#"
+                        key={label}
+                        href={href}
+                        target={href.startsWith("mailto:") ? undefined : "_blank"}
+                        rel="noopener noreferrer"
+                        aria-label={label}
                         whileHover={{ y: -2, color: "#C9F31D" }}
                         className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
                         style={{
@@ -251,11 +225,7 @@ export default function AboutSection() {
                   boxShadow: "0 8px 24px rgba(201,243,29,0.3)",
                 }}
                 animate={{ rotate: [0, 10, 0, -10, 0] }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               >
                 <HiOutlineBadgeCheck size={22} color="var(--primary)" />
               </motion.div>
@@ -270,11 +240,7 @@ export default function AboutSection() {
                   boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
                 }}
                 animate={{ y: [0, -5, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
                 <div className="flex items-center gap-2">
                   <span
@@ -297,7 +263,7 @@ export default function AboutSection() {
 
           {/* ── RIGHT — Content ────────────────────────────────────── */}
           <div className="flex flex-col gap-8">
-            {/* Heading */}
+            {/* Heading and paragraphs */}
             <motion.div {...fadeRight(0.15)}>
               <h2
                 className="font-black leading-tight mb-4"
@@ -308,12 +274,12 @@ export default function AboutSection() {
                   letterSpacing: "-0.02em",
                 }}
               >
-                Turning strategy into{" "}
+                Turning customer experiences into{" "}
                 <span
                   className="relative inline-block"
                   style={{ color: "var(--secondary)" }}
                 >
-                  results
+                  lasting value
                   <motion.span
                     className="absolute -bottom-1 left-0 h-px w-full"
                     style={{ background: "rgba(201,243,29,0.4)" }}
@@ -323,19 +289,19 @@ export default function AboutSection() {
                     transition={{ delay: 0.6, duration: 0.6 }}
                   />
                 </span>
-                , every time.
+                .
               </h2>
               <p className="text-base leading-relaxed text-text-light">
-                I'm Patience Oha, a Technical Project Manager focused on helping
-                founders, startups and growing businesses turn ideas into
-                successful SaaS, web, and mobile products through structured
-                execution and customer-focused project management.
+                I'm Patience Oha, a Customer Success professional with a
+                background in customer-facing roles, customer support, and
+                technical project coordination.
               </p>
               <p className="text-base mt-2 leading-relaxed text-text-light">
-                I specialize in coordinating projects from idea to execution,
-                ensuring teams stay aligned, workflows remain organized, and
-                products are built with both business goals and user experience
-                in mind.
+                My experience spans supporting the adoption of digital systems
+                by over 2,000 users, working with software clients, and helping
+                customers navigate products and services. I bring this experience
+                into Customer Success, focusing on onboarding, product adoption,
+                customer engagement, and retention.
               </p>
             </motion.div>
 
