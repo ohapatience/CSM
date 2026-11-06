@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
 import { FaPlay } from "react-icons/fa6";
 
-// ── Your content (edit these later) ──────────────────────────────────────────
-// Paste your YouTube link between the quotes, for example:
-// "https://www.youtube.com/watch?v=abc123xyz00"
-const VIDEO_URL = "";
+// ── Your content ─────────────────────────────────────────────────────────────
+const VIDEO_URL = "https://youtu.be/-AEP5VoJc4E";
 
 const SECTION_LABEL = "Meet Me";
 const HEADING = "A quick introduction";
@@ -56,13 +54,13 @@ export default function VideoSection() {
           </p>
         </motion.div>
 
-        {/* Video frame */}
+        {/* Video frame: full width of the page */}
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto w-full max-w-3xl aspect-video rounded-3xl overflow-hidden"
+          className="relative w-full aspect-video rounded-3xl overflow-hidden"
           style={{
             background: "linear-gradient(145deg, #1C3F39 0%, #122B27 100%)",
             border: "1px solid rgba(42,96,87,0.6)",

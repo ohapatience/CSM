@@ -3,29 +3,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { HiOutlineBadgeCheck } from "react-icons/hi";
 import { HiArrowRight } from "react-icons/hi2";
 import { FaLinkedinIn, FaEnvelope } from "react-icons/fa6";
-import {
-  SiUpwork,
-  SiHubspot,
-  SiZendesk,
-  SiJira,
-  SiNotion,
-  SiTrello,
-  SiAsana,
-  SiSlack,
-  SiGoogle,
-  SiCalendly,
-  SiCanva,
-  SiMixpanel,
-  SiIntercom,
-  SiZoom,
-} from "react-icons/si";
+import { SiUpwork } from "react-icons/si";
 import PageHeroSection from "../components/PageHeroSection";
 import heroImage from "../assets/ezinne.png";
-
-// ── Links (replace these placeholders with your real links) ──────────────────
-const LINKEDIN_URL = "https://www.linkedin.com/in/YOUR-PROFILE";
-const UPWORK_URL = "https://www.upwork.com/freelancers/YOUR-UPWORK-PROFILE";
-const EMAIL = "your@email.com";
+import { LINKEDIN_URL, UPWORK_URL, EMAIL } from "../links";
 
 // ── Content ──────────────────────────────────────────────────────────────────
 const SOCIALS = [
@@ -86,37 +67,31 @@ const CS_THINKING = [
   },
 ];
 
+// "level" is how full the bar is (0 to 100). Change any number you like.
 const SKILLS = [
-  "Customer Onboarding",
-  "Customer Relationship Management",
-  "Product Adoption",
-  "Customer Engagement",
-  "Customer Support",
-  "Client Communication",
-  "Customer Feedback",
-  "Issue Resolution",
-  "Retention Support",
-  "Account Coordination",
+  { name: "Customer Onboarding", level: 90 },
+  { name: "Customer Relationship Management", level: 85 },
+  { name: "Product Adoption", level: 80 },
+  { name: "Customer Engagement", level: 85 },
+  { name: "Customer Support", level: 95 },
+  { name: "Client Communication", level: 90 },
+  { name: "Customer Feedback", level: 75 },
+  { name: "Issue Resolution", level: 90 },
+  { name: "Retention Support", level: 70 },
+  { name: "Account Coordination", level: 80 },
 ];
 
-// Tools without an icon show the first letter of their name instead
-const TOOLS = [
-  { name: "HubSpot", icon: SiHubspot },
-  { name: "Zendesk", icon: SiZendesk },
-  { name: "Freshdesk" },
-  { name: "Jira", icon: SiJira },
-  { name: "Notion", icon: SiNotion },
-  { name: "Trello", icon: SiTrello },
-  { name: "Asana", icon: SiAsana },
-  { name: "Slack", icon: SiSlack },
-  { name: "Google Workspace", icon: SiGoogle },
-  { name: "Calendly", icon: SiCalendly },
-  { name: "Canva", icon: SiCanva },
-  { name: "Mixpanel", icon: SiMixpanel },
-  { name: "Intercom", icon: SiIntercom },
-  { name: "Zoom", icon: SiZoom },
-  { name: "Claude" },
-  { name: "Gemini" },
+// Certifications and education, most relevant first
+const CERTIFICATIONS = [
+  { name: "Customer Success Management Fundamentals", issuer: "LinkedIn Learning" },
+  { name: "Customer Success: Skills for Successful Client Interactions", issuer: "LinkedIn Learning" },
+  { name: "Google Project Management Certificate", issuer: "Google" },
+  { name: "Customer Success Management in Training", issuer: "Digital Witch" },
+  { name: "HubSpot Sales Hub Certification", issuer: "HubSpot" },
+];
+
+const EDUCATION = [
+  { name: "B.Sc. Library and Information Science", issuer: "2019" },
 ];
 
 // ── Animation helper ─────────────────────────────────────────────────────────
@@ -333,7 +308,7 @@ function IntroSection() {
               transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-4 flex-wrap pt-2"
             >
-              {/* TODO: change /projects if your case studies page uses a different address */}
+              {/* Change /projects if your case studies page uses a different address */}
               <motion.a
                 href="/projects"
                 whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(201,243,29,0.3)" }}
@@ -439,7 +414,10 @@ function JourneySection() {
                   </p>
                 </motion.div>
                 {i < JOURNEY.length - 1 && (
-                  <div className="mt-10 h-px w-full" style={{ background: "rgba(42,96,87,0.25)" }} />
+                  <div
+                    className="mt-10 h-px w-full"
+                    style={{ background: "rgba(42,96,87,0.25)" }}
+                  />
                 )}
               </div>
             ))}
@@ -604,45 +582,75 @@ function HumanSection() {
   );
 }
 
-// ── Section 5: Skills & Tools ───────────────────────────────────────────────
-function ToolCard({ tool }) {
-  const Icon = tool.icon;
-  return (
-    <div
-      className="flex items-center gap-3 p-3 rounded-xl"
-      style={{
-        background: "rgba(28,63,57,0.3)",
-        border: "1px solid rgba(42,96,87,0.35)",
-      }}
-    >
-      <div
-        className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-        style={{ background: "rgba(201,243,29,0.1)", color: "#C9F31D" }}
-      >
-        {Icon ? (
-          <Icon size={18} />
-        ) : (
-          <span className="text-sm font-black">{tool.name.charAt(0)}</span>
-        )}
-      </div>
-      <span className="text-sm" style={{ color: "#7FB3AE" }}>
-        {tool.name}
-      </span>
-    </div>
-  );
-}
-
-function SkillsToolsSection() {
+// ── Section 5: Skills (animated bars) ───────────────────────────────────────
+function SkillsSection() {
   return (
     <section
       className="relative overflow-hidden section"
       style={{ background: "#0D2622" }}
     >
       <div className="wrapper relative z-10">
-        <SectionLabel>Skills & Tools</SectionLabel>
+        <SectionLabel>Skills</SectionLabel>
+
+        <div className="flex flex-col gap-6">
+          {SKILLS.map((skill, i) => (
+            <motion.div
+              key={skill.name}
+              {...fadeUp(0.05 + i * 0.05)}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-14 lg:items-center"
+            >
+              {/* Skill name */}
+              <div className="flex items-center gap-3">
+                <span
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: "#C9F31D" }}
+                />
+                <span className="text-sm" style={{ color: "#7FB3AE" }}>
+                  {skill.name}
+                </span>
+              </div>
+
+              {/* Animated bar */}
+              <div
+                className="w-full h-2 rounded-full overflow-hidden"
+                style={{ background: "rgba(42,96,87,0.35)" }}
+              >
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{
+                    background: "linear-gradient(to right, rgba(201,243,29,0.5), #C9F31D)",
+                    boxShadow: "0 0 12px rgba(201,243,29,0.35)",
+                  }}
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${skill.level}%` }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{
+                    duration: 1.2,
+                    delay: 0.2 + i * 0.08,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Section 6: Certifications & Education ───────────────────────────────────
+function CertificationsSection() {
+  return (
+    <section
+      className="relative overflow-hidden section"
+      style={{ background: "#0A1F1C" }}
+    >
+      <div className="wrapper relative z-10">
+        <SectionLabel>Certifications & Education</SectionLabel>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
-          {/* Left: skills */}
+          {/* Certifications */}
           <motion.div {...fadeUp(0.05)}>
             <h3
               className="font-black mb-6"
@@ -652,24 +660,30 @@ function SkillsToolsSection() {
                 fontSize: "1.4rem",
               }}
             >
-              Skills
+              Certifications
             </h3>
-            <ul className="flex flex-col gap-4">
-              {SKILLS.map((skill) => (
-                <li key={skill} className="flex items-center gap-3">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{ background: "#C9F31D" }}
-                  />
-                  <span className="text-sm" style={{ color: "#7FB3AE" }}>
-                    {skill}
-                  </span>
-                </li>
+            <div className="flex flex-col gap-3">
+              {CERTIFICATIONS.map((c) => (
+                <div
+                  key={c.name}
+                  className="p-4 rounded-xl"
+                  style={{
+                    background: "rgba(28,63,57,0.3)",
+                    border: "1px solid rgba(42,96,87,0.35)",
+                  }}
+                >
+                  <p className="text-sm font-semibold" style={{ color: "var(--white)" }}>
+                    {c.name}
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: "#4A7A73" }}>
+                    {c.issuer}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           </motion.div>
 
-          {/* Right: tools */}
+          {/* Education */}
           <motion.div {...fadeUp(0.1)}>
             <h3
               className="font-black mb-6"
@@ -679,11 +693,25 @@ function SkillsToolsSection() {
                 fontSize: "1.4rem",
               }}
             >
-              Tools
+              Education
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {TOOLS.map((tool) => (
-                <ToolCard key={tool.name} tool={tool} />
+            <div className="flex flex-col gap-3">
+              {EDUCATION.map((e) => (
+                <div
+                  key={e.name}
+                  className="p-4 rounded-xl"
+                  style={{
+                    background: "rgba(28,63,57,0.3)",
+                    border: "1px solid rgba(42,96,87,0.35)",
+                  }}
+                >
+                  <p className="text-sm font-semibold" style={{ color: "var(--white)" }}>
+                    {e.name}
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: "#4A7A73" }}>
+                    {e.issuer}
+                  </p>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -711,7 +739,8 @@ const About = () => {
       <JourneySection />
       <ThinkingSection />
       <HumanSection />
-      <SkillsToolsSection />
+      <SkillsSection />
+      <CertificationsSection />
     </>
   );
 };
