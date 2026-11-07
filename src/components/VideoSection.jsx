@@ -6,7 +6,8 @@ const VIDEO_URL = "https://youtu.be/-AEP5VoJc4E";
 
 const SECTION_LABEL = "Meet Me";
 const HEADING = "A quick introduction";
-const TAGLINE = "Your tagline goes here";
+const TAGLINE =
+  "A short introduction to how I help customers get value, from first demo to long-term retention.";
 
 // Converts a normal YouTube link into the embed link the page needs
 function getYouTubeEmbedUrl(url) {
@@ -49,7 +50,7 @@ export default function VideoSection() {
           >
             {HEADING}
           </h2>
-          <p className="text-base" style={{ color: "#7FB3AE" }}>
+          <p className="text-base max-w-2xl mx-auto" style={{ color: "#7FB3AE" }}>
             {TAGLINE}
           </p>
         </motion.div>
