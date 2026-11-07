@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { FaLinkedinIn, FaEnvelope } from "react-icons/fa6";
-import { SiUpwork } from "react-icons/si";
 import heroImage from "../assets/ezinne.png";
-import { LINKEDIN_URL, UPWORK_URL, EMAIL } from "../links";
 
 // Titles that scroll in and out, one after another
 const ROLES = [
@@ -19,7 +16,7 @@ function useTypewriter(
 ) {
   const [display, setDisplay] = useState("");
   const [wordIdx, setWordIdx] = useState(0);
-  const [phase, setPhase] = useState("typing"); // typing | pausing | deleting
+  const [phase, setPhase] = useState("typing");
 
   useEffect(() => {
     const word = words[wordIdx % words.length];
@@ -148,26 +145,6 @@ function StatItem({ value, label, delay }) {
   );
 }
 
-// ── Social link ───────────────────────────────────────────────────────────────
-function SocialLink({ href, icon, label, delay }) {
-  return (
-    <motion.a
-      href={href}
-      target={href.startsWith("mailto:") ? undefined : "_blank"}
-      rel="noopener noreferrer"
-      aria-label={label}
-      initial={{ opacity: 0, x: -16 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration: 0.5, ease: "easeOut" }}
-      whileHover={{ x: 6, color: "#C9F31D" }}
-      className="flex items-center justify-center w-8 h-8 transition-colors"
-      style={{ color: "#4A7A73" }}
-    >
-      {icon}
-    </motion.a>
-  );
-}
-
 // ── Main Hero ─────────────────────────────────────────────────────────────────
 export default function HeroSection() {
   const typed = useTypewriter(ROLES, {
@@ -206,41 +183,6 @@ export default function HeroSection() {
 
         {/* ── LEFT PANEL ─────────────────────────────────────────── */}
         <div className="relative z-10 flex flex-col justify-between w-full lg:w-[55%] px-8 md:px-16 py-12">
-          {/* Social sidebar: LinkedIn, Upwork, Email */}
-          <motion.div
-            className="absolute left-6 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-          >
-            <div
-              className="w-px h-16"
-              style={{ background: "linear-gradient(transparent, #2A6057)" }}
-            />
-            <SocialLink
-              href={LINKEDIN_URL}
-              label="LinkedIn"
-              delay={1.3}
-              icon={<FaLinkedinIn size={16} />}
-            />
-            <SocialLink
-              href={UPWORK_URL}
-              label="Upwork"
-              delay={1.4}
-              icon={<SiUpwork size={16} />}
-            />
-            <SocialLink
-              href={`mailto:${EMAIL}`}
-              label="Email"
-              delay={1.5}
-              icon={<FaEnvelope size={16} />}
-            />
-            <div
-              className="w-px h-16"
-              style={{ background: "linear-gradient(#2A6057, transparent)" }}
-            />
-          </motion.div>
-
           {/* Main content */}
           <div className="flex flex-col justify-center flex-1 mt-8 lg:mt-0 lg:pl-10">
             {/* Availability badge */}
@@ -319,53 +261,6 @@ export default function HeroSection() {
               lasting value, and build relationships that drive retention and
               growth.
             </motion.p>
-
-            {/* Buttons side by side */}
-            <motion.div
-              {...enter(0.85)}
-              className="flex items-center gap-4 flex-wrap mb-14"
-            >
-              <motion.a
-                href="/contact"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-7 py-4 rounded-xl font-bold text-sm tracking-wide inline-flex items-center gap-2"
-                style={{
-                  background: "#C9F31D",
-                  color: "#1C3F39",
-                  fontFamily: "'Raleway', sans-serif",
-                  boxShadow: "0 0 32px rgba(201,243,29,0.25)",
-                }}
-              >
-                Send Me a Message
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </motion.a>
-
-              <motion.a
-                href="/contact"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-7 py-4 rounded-xl font-bold text-sm tracking-wide inline-flex items-center gap-2"
-                style={{
-                  border: "1px solid #C9F31D",
-                  color: "#C9F31D",
-                  fontFamily: "'Raleway', sans-serif",
-                }}
-              >
-                Hire Me
-              </motion.a>
-            </motion.div>
 
             {/* Stats */}
             <motion.div
